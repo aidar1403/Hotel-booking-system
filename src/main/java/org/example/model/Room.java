@@ -6,26 +6,26 @@ private final int id;
 private String RoomNumber;
 private RoomType Type;
 private int Capacity;
-private boolean IsAvailable;
+private RoomStatus Status;
 
-public Room (String RoomNumber,RoomType Type,int Capacity, boolean IsAvailable){
+public Room (String RoomNumber,RoomType Type,int Capacity, RoomStatus Status){
     this.id = nextId++;
     this.RoomNumber = RoomNumber;
     this.Type = Type;
     this.Capacity = Capacity;
-    this.IsAvailable = IsAvailable;
+    this.Status = Status;
 }
 
     public int getId() {return id ;}
     public String getRoomNumber() {return RoomNumber ;}
     public RoomType getType() {return Type ;}
     public int getCapacity() {return Capacity ;}
-    public boolean IsAvailable() {return IsAvailable ;}
+    public RoomStatus getStatus () {return Status ;}
 
     public void setRoomNumber(String RoomNumber) {this.RoomNumber = RoomNumber; }
     public void setType(RoomType Type) {this.Type = Type; }
     public void setCapacity(int Capacity) {this.Capacity = Capacity; }
-    public void setIsAvailable(boolean IsAvailable) {this.IsAvailable = IsAvailable; }
+    public void setStatus(RoomStatus Status) {this.Status= Status ; }
 
     }
 

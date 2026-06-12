@@ -9,5 +9,6 @@ public interface RoomRepository {
     List<Room> getRooms();
     Room findRoomById(int id);
     void addRooms (int startNumber,int endNumber, RoomType Type,int Capacity);
+    List<Room> findAvailableByType (RoomType type);
 }
 

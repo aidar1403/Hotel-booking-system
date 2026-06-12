@@ -2,6 +2,7 @@ package org.example.repository;
 import java.util.List;
 import java.util.ArrayList;
 import org.example.model.Room;
+import org.example.model.RoomStatus;
 import org.example.model.RoomType;
 
 public class InMemoryRoomRepository implements RoomRepository{
@@ -39,9 +40,19 @@ public class InMemoryRoomRepository implements RoomRepository{
 
         for (int i = startNumber;i<= endNumber;i++) {
             String RoomNumber = String.valueOf(i);
-            Room room = new Room(RoomNumber,Type,Capacity,true);
+            Room room = new Room(RoomNumber,Type,Capacity, RoomStatus.AVAILABLE);
             rooms.add(room);
         }
         System.out.println("Rooms added: "+(endNumber-startNumber+1));
+    }
+    @Override
+    public List<Room> findAvailableByType(RoomType Type) {
+        List<Room> available = new ArrayList<>();
+        for (Room room : rooms) {
+            if (room.getType() == Type && room.getStatus() == RoomStatus.AVAILABLE) {
+                available.add(room);
+            }
+        }
+        return available;
     }
 }
