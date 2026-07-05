@@ -4,6 +4,7 @@ import org.example.model.Room;
 import org.example.model.RoomType;
 import org.example.service.RoomService;
 import org.example.service.BookingService;
+
 import java.util.Scanner;
 import java.util.List;
 
@@ -26,8 +27,13 @@ int choice = getIntInput("\nChoose option :");
             switch (choice) {
                 case 1:
                     addRooms();
+                    break;
                 case 2:
                     showAllRooms();
+                    break;
+                case 3:
+                    showAvailableRoomsByType();
+                    break;
             }
         }
     }
@@ -91,6 +97,35 @@ int choice = getIntInput("\nChoose option :");
                     r.getStatus());
         }
         System.out.println("Всего комнат: "+ rooms.size());
+    }
+
+    private void showAvailableRoomsByType(){
+        System.out.println("Выберите тип комнаты");
+        System.out.println("1. STANDARD");
+        System.out.println("2. LUX");
+        System.out.println("3. PRESIDENT");
+        int choice = getIntInput("Ваш выбор: ");
+
+        RoomType type;
+        switch (choice) {
+            case 1 -> type = RoomType.STANDARD;
+            case 2 -> type = RoomType.LUX;
+            case 3 -> type = RoomType.PRESIDENT;
+            default -> {
+                System.out.println("Неверный выбор.");
+                return;
+            }
+        }
+
+        List<Room> available = roomService.findAvailableRoomsByType(type);
+        if (available.isEmpty()){
+            System.out.println("Нет свободных комнат типа: "+type);
+        }else{
+            for (Room r : available) {
+                System.out.println("Номер: "+r.getRoomNumber()+
+                        ", Вместимость: "+r.getCapacity());
+            }
+        }
     }
 
 private int getIntInput(String prompt) {

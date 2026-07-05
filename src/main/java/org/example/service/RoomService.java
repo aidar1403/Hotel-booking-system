@@ -22,4 +22,8 @@ public List<Room> getAllRooms() {
 public Room findRoomById(int id){
     return repository.findRoomById(id);
 }
+
+public List<Room> findAvailableRoomsByType(RoomType type) {
+    return repository.findAvailableByType(type);
+}
 }
