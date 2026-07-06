@@ -1,5 +1,6 @@
 package org.example.ui;
 
+import org.example.model.Booking;
 import org.example.model.Room;
 import org.example.model.RoomType;
 import org.example.service.RoomService;
@@ -33,6 +34,9 @@ int choice = getIntInput("\nChoose option :");
                     break;
                 case 3:
                     showAvailableRoomsByType();
+                    break;
+                case 5:
+                    showAllBookings();
                     break;
             }
         }
@@ -126,6 +130,33 @@ int choice = getIntInput("\nChoose option :");
                         ", Вместимость: "+r.getCapacity());
             }
         }
+    }
+
+    private void showAllBookings() {
+        List <Booking> bookings = bookingService.getAllBookings();
+        if (bookings.isEmpty()){
+            System.out.println("Нет ни одной брони.");
+            return;
+        }
+
+        System.out.println("\n=== Все брони ===");
+        System.out.printf("%-5s | %-15s | %-10s | %-10s | %-10s | %-10s | %-10s%n",
+                "ID", "Клиент", "Тип", "Заезд", "Выезд", "Статус","Комната");
+        System.out.println("------------------------------------------------------------");
+
+        for (Booking b : bookings) {
+            String roomInfo = b.getAssignedRoom() != null ?
+                    "Комната "+b.getAssignedRoom() : "не назначена";
+            System.out.printf("%-5d | %-15s | %-10s | %-10s | %-10s |%-10s | %-10s%n",
+                    b.getId(),
+                    b.getClientName(),
+                    b.getRequestedRoomType(),
+                    b.getStartDate(),
+                    b.getEndDate(),
+                    b.getStatus(),
+                    roomInfo);
+        }
+        System.out.println("Всего броней: "+ bookings.size());
     }
 
 private int getIntInput(String prompt) {
