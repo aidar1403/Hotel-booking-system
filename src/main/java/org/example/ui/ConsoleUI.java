@@ -35,8 +35,14 @@ int choice = getIntInput("\nChoose option :");
                 case 3:
                     showAvailableRoomsByType();
                     break;
+                case 4:
+                    createBooking();
+                    break;
                 case 5:
                     showAllBookings();
+                    break;
+                case 6:
+                    findBookingById();
                     break;
             }
         }
@@ -132,6 +138,34 @@ int choice = getIntInput("\nChoose option :");
         }
     }
 
+    private void createBooking(){
+        System.out.println("\n=== Создание новой брони ===");
+
+        String clientName = getStringInput("Имя клиента: ",true);
+        int guests = getIntInput("Количество гостей: ");
+        System.out.println("Выберите тип комнаты:");
+        System.out.println("1. STANDARD");
+        System.out.println("2. LUX");
+        System.out.println("3. PRESIDENT");
+        int typeChoice = getIntInput("Ваш выбор: ");
+
+        RoomType type;
+        switch (typeChoice) {
+            case 1 -> type = RoomType.STANDARD;
+            case 2 -> type = RoomType.LUX;
+            case 3 -> type = RoomType.PRESIDENT;
+            default -> {
+                System.out.println("Неверный выбор. Устанавливаем STANDARD.");
+                type = RoomType.STANDARD;
+            }
+        }
+
+        String startDate = getStringInput("Дата заезда (ГГГГ-ММ-ДД): ",true);
+        String endDate = getStringInput("Дата выезда (ГГГГ-ММ-ДД): ",true);
+
+        bookingService.createBooking(clientName,guests,type,startDate,endDate);
+    }
+
     private void showAllBookings() {
         List <Booking> bookings = bookingService.getAllBookings();
         if (bookings.isEmpty()){
@@ -159,14 +193,45 @@ int choice = getIntInput("\nChoose option :");
         System.out.println("Всего броней: "+ bookings.size());
     }
 
+    private void findBookingById(){
+        int id = getIntInput("Введите ID брони: ");
+        Booking booking = bookingService.findBookingById(id);
+        if (booking == null){
+            System.out.println("Бронь с ID " + id + " не найдена.");
+            return;
+        }
+
+        System.out.println("\n=== Детали брони ===");
+        System.out.println("ID: " + booking.getId());
+        System.out.println("Клиент: " + booking.getClientName());
+        System.out.println("Тип комнаты: " + booking.getRequestedRoomType());
+        System.out.println("Количество гостей: " + booking.getNumberOfGuests());
+        System.out.println("Заезд: " + booking.getStartDate());
+        System.out.println("Выезд: " + booking.getEndDate());
+        System.out.println("Статус: " + booking.getStatus());
+        System.out.println("Комната: " + (booking.getAssignedRoom() !=null ?
+                booking.getAssignedRoom() : "не назначена"));
+    }
+
 private int getIntInput(String prompt) {
         while (true) {
-            System.out.println(prompt);
+            System.out.print(prompt);
             try{
                 return Integer.parseInt(scanner.nextLine().trim());
             }catch (NumberFormatException e){
                 System.out.println("Пожалуйста введите корректный номер");
             }
+        }
+}
+
+private String getStringInput(String prompt, boolean required) {
+        while (true) {
+            System.out.print(prompt);
+            String input = scanner.nextLine().trim();
+            if (!required || !input.isEmpty()) {
+                return input;
+            }
+            System.out.println("Это поле обязательно. Попробуйте снова.");
         }
 }
     }
