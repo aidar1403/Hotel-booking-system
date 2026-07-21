@@ -44,6 +44,10 @@ int choice = getIntInput("\nChoose option :");
                 case 6:
                     findBookingById();
                     break;
+                case 7:
+                    cancelBooking();
+                case 8:
+                    assignRoomManually();
             }
         }
     }
@@ -211,6 +215,17 @@ int choice = getIntInput("\nChoose option :");
         System.out.println("Статус: " + booking.getStatus());
         System.out.println("Комната: " + (booking.getAssignedRoom() !=null ?
                 booking.getAssignedRoom() : "не назначена"));
+    }
+
+    private void cancelBooking(){
+        int id = getIntInput("Введите ID брони для отмены: ");
+     bookingService.cancelBooking(id);
+    }
+
+    private void assignRoomManually(){
+        int bookingId = getIntInput("Введите ID брони: ");
+        int roomId = getIntInput("Введите ID комнаты: ");
+        bookingService.assignRoom(bookingId, roomId);
     }
 
 private int getIntInput(String prompt) {
