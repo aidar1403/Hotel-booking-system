@@ -5,7 +5,6 @@ import org.example.model.Room;
 import org.example.model.RoomType;
 import org.example.service.RoomService;
 import org.example.service.BookingService;
-
 import java.util.Scanner;
 import java.util.List;
 
@@ -46,8 +45,28 @@ int choice = getIntInput("\nChoose option :");
                     break;
                 case 7:
                     cancelBooking();
+                    break;
                 case 8:
                     assignRoomManually();
+                    break;
+                case 9:
+                    updateStatuses();
+                    break;
+                case 10:
+                    cleanRoom();
+                    break;
+                case 11:
+                    updateRoom();
+                    break;
+                case 12:
+                    deleteRoom();
+                    break;
+                case 0:
+                    System.out.println("Goodbye!");
+                    running = false;
+                    break;
+                    default:
+                        System.out.println("Неверный выбор. Попробуйте снова.");
             }
         }
     }
@@ -87,6 +106,8 @@ int choice = getIntInput("\nChoose option :");
         System.out.println("8.  Назначить комнату брони (вручную)");
         System.out.println("9.  Обновить статусы броней (автоматически)");
         System.out.println("10. Отменить комнату как убранную");
+        System.out.println("11. Изменить данные комнаты");
+        System.out.println("12. Удалить комнату");
         System.out.println("0.  Выход");
     }
 
@@ -145,7 +166,7 @@ int choice = getIntInput("\nChoose option :");
     private void createBooking(){
         System.out.println("\n=== Создание новой брони ===");
 
-        String clientName = getStringInput("Имя клиента: ",true);
+        String clientName = getStringInput("Имя клиента: ");
         int guests = getIntInput("Количество гостей: ");
         System.out.println("Выберите тип комнаты:");
         System.out.println("1. STANDARD");
@@ -164,8 +185,8 @@ int choice = getIntInput("\nChoose option :");
             }
         }
 
-        String startDate = getStringInput("Дата заезда (ГГГГ-ММ-ДД): ",true);
-        String endDate = getStringInput("Дата выезда (ГГГГ-ММ-ДД): ",true);
+        String startDate = getStringInput("Дата заезда (ГГГГ-ММ-ДД): ");
+        String endDate = getStringInput("Дата выезда (ГГГГ-ММ-ДД): ");
 
         bookingService.createBooking(clientName,guests,type,startDate,endDate);
     }
@@ -228,6 +249,47 @@ int choice = getIntInput("\nChoose option :");
         bookingService.assignRoom(bookingId, roomId);
     }
 
+    private void updateStatuses(){
+        System.out.println("\n=== Обновление статусов ===");
+        bookingService.updateStatuses();
+        System.out.println("Готово.");
+    }
+
+    private void cleanRoom(){
+        int roomId = getIntInput("Введите ID комнаты для уборки: ");
+        bookingService.cleanRoom(roomId);
+    }
+
+    private void updateRoom() {
+        int roomId = getIntInput("Введите ID комнаты: ");
+
+        System.out.println("Выберите новый тип комнаты:");
+        System.out.println("1. STANDARD");
+        System.out.println("2. LUX");
+        System.out.println("3. PRESIDENT");
+        int typeChoice = getIntInput("Ваш выбор: ");
+
+        RoomType type;
+        switch (typeChoice) {
+            case 1 -> type = RoomType.STANDARD;
+            case 2 -> type = RoomType.LUX;
+            case 3 -> type = RoomType.PRESIDENT;
+            default -> {
+                System.out.println("Неверный выбор.");
+                return;
+            }
+        }
+
+        int capacity = getIntInput("Новая вместимость: ");
+
+        roomService.updateRoom(roomId, type, capacity);
+    }
+
+    private void deleteRoom() {
+        int roomId = getIntInput("Введите ID комнаты для удаления: ");
+        roomService.deleteRoom(roomId);
+    }
+
 private int getIntInput(String prompt) {
         while (true) {
             System.out.print(prompt);
@@ -239,11 +301,11 @@ private int getIntInput(String prompt) {
         }
 }
 
-private String getStringInput(String prompt, boolean required) {
+private String getStringInput(String prompt) {
         while (true) {
             System.out.print(prompt);
             String input = scanner.nextLine().trim();
-            if (!required || !input.isEmpty()) {
+            if (!input.isEmpty()) {
                 return input;
             }
             System.out.println("Это поле обязательно. Попробуйте снова.");

@@ -10,5 +10,7 @@ public interface RoomRepository {
     Room findRoomById(int id);
     void addRooms (int startNumber,int endNumber, RoomType Type,int Capacity);
     List<Room> findAvailableByType (RoomType type);
+    void updateRoom(Room room);
+    void deleteRoom(int id);
 }
 
