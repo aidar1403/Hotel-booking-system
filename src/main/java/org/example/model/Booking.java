@@ -2,7 +2,7 @@ package org.example.model;
 
 public class Booking {
     private static int nextId = 1;
-    private final int id;
+    private int id;
     private String clientName;
     private int numberOfGuests;
     private BookingStatus status;
@@ -31,6 +31,7 @@ public class Booking {
     public String getStartDate () {return startDate ;}
     public String getEndDate () {return endDate ;}
 
+    public void setId (int id) { this.id = id; }
     public void setClientName (String clientName) {this.clientName = clientName;}
     public void setNumberOfGuests (int numberOfGuests) {this.numberOfGuests = numberOfGuests;}
     public void setStatus (BookingStatus status) {this.status = status;}
