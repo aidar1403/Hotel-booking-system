@@ -2,7 +2,7 @@ package org.example.model;
 
 public class Room {
 private static int nextId = 1;
-private final int id;
+private int id;
 private String RoomNumber;
 private RoomType Type;
 private int Capacity;
@@ -22,6 +22,7 @@ public Room (String RoomNumber,RoomType Type,int Capacity, RoomStatus Status){
     public int getCapacity() {return Capacity ;}
     public RoomStatus getStatus () {return Status ;}
 
+    public void setId(int id) {this.id = id;}
     public void setRoomNumber(String RoomNumber) {this.RoomNumber = RoomNumber; }
     public void setType(RoomType Type) {this.Type = Type; }
     public void setCapacity(int Capacity) {this.Capacity = Capacity; }
