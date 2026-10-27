@@ -8,11 +8,14 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
+@Repository
 public class PostgresRoomRepository implements RoomRepository {
 
-    private final String URL = "jdbc:postgresql://localhost:5433/hotel";
-    private final String USER = "admin";
-    private final String PASSWORD = "admin";
+    private final String URL = System.getenv().getOrDefault("SPRING_DATASOURCE_URL", "jdbc:postgresql://localhost:5433/hotel");
+    private final String USER = System.getenv().getOrDefault("SPRING_DATASOURCE_USERNAME", "admin");
+    private final String PASSWORD = System.getenv().getOrDefault("SPRING_DATASOURCE_PASSWORD", "admin");
 
     public PostgresRoomRepository() {
         createTableIfNotExists();

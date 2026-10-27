@@ -1,32 +1,39 @@
 package org.example.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Room {
-private static int nextId = 1;
-private int id;
-private String RoomNumber;
-private RoomType Type;
-private int Capacity;
-private RoomStatus Status;
+    private static int nextId = 1;
+    private int id;
+    private String roomNumber;
+    private RoomType type;
+    private int capacity;
+    private RoomStatus status;
 
-public Room (String RoomNumber,RoomType Type,int Capacity, RoomStatus Status){
-    this.id = nextId++;
-    this.RoomNumber = RoomNumber;
-    this.Type = Type;
-    this.Capacity = Capacity;
-    this.Status = Status;
-}
-
-    public int getId() {return id ;}
-    public String getRoomNumber() {return RoomNumber ;}
-    public RoomType getType() {return Type ;}
-    public int getCapacity() {return Capacity ;}
-    public RoomStatus getStatus () {return Status ;}
-
-    public void setId(int id) {this.id = id;}
-    public void setRoomNumber(String RoomNumber) {this.RoomNumber = RoomNumber; }
-    public void setType(RoomType Type) {this.Type = Type; }
-    public void setCapacity(int Capacity) {this.Capacity = Capacity; }
-    public void setStatus(RoomStatus Status) {this.Status= Status ; }
-
+    public Room() {
     }
 
+    public Room(String roomNumber, RoomType type, int capacity, RoomStatus status) {
+        this.id = nextId++;
+        this.roomNumber = roomNumber;
+        this.type = type;
+        this.capacity = capacity;
+        this.status = status;
+    }
+
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
+
+    public String getRoomNumber() { return roomNumber; }
+    public void setRoomNumber(String roomNumber) { this.roomNumber = roomNumber; }
+
+    public RoomType getType() { return type; }
+    public void setType(RoomType type) { this.type = type; }
+
+    public int getCapacity() { return capacity; }
+    public void setCapacity(int capacity) { this.capacity = capacity; }
+
+    public RoomStatus getStatus() { return status; }
+    public void setStatus(RoomStatus status) { this.status = status; }
+}

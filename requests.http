@@ -1,0 +1,8 @@
+### Change the name and send the request again
+GET http://localhost:8080/api/hello?name=Anna
+
+### A different user sends a different value
+GET http://localhost:8080/api/hello?name=Boris
+
+### Default when no name is provided
+GET http://localhost:8080/api/hello
