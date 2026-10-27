@@ -1,4 +1,4 @@
-# Hotel Booking System 🏨
+# Hotel Booking System 
 
 A REST API for a hotel booking system built with Java and Spring Boot.
 
@@ -10,7 +10,7 @@ A REST API for a hotel booking system built with Java and Spring Boot.
 - **Swagger / OpenAPI** (API Documentation)
 - **JDBC** (Database Connectivity)
 
-## 🚀 How to Run
+##  How to Run
 All you need is Docker installed on your machine.
 
 1. Clone the repository:
